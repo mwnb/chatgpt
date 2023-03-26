@@ -16,7 +16,7 @@ export default function IM() {
             }
             setText('')
             setIconType(LoadingIcon)
-            fetch('https://gmlook.top/chat/openai/gpt?prompt=nginx配置流式输出').then(data => data.text()).then(data => {
+            fetch('/chat/openai/gpt?prompt=nginx配置流式输出').then(data => data.text()).then(data => {
                 console.log(data)
                 setIconType(EnterIcon)
             })        
