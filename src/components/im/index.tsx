@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Card, message, Textarea,  } from 'tdesign-react'
+import { Card, message, Textarea, Tooltip } from 'tdesign-react'
 import { EnterIcon, LoadingIcon } from 'tdesign-icons-react'
 import { debound } from '../../utils'
 
@@ -51,11 +51,14 @@ export default function IM() {
                         autosize={{ minRows: 2, maxRows: 2 }} 
                         onChange={v => setText(v)}
                         onKeypress={onEnter}
+                        placeholder="please enter your question"
                     />
-                    <IconType 
-                        style={{ fontSize: 35, cursor: 'pointer' }} 
-                        onClick={onSend}
-                    />
+                    <Tooltip content={IconType === EnterIcon ? 'send' : 'loading'}>
+                        <IconType 
+                            style={{ fontSize: 35, cursor: 'pointer' }} 
+                            onClick={IconType === EnterIcon ? onSend : void 0}
+                        />
+                    </Tooltip>                    
                 </footer>
             )}
         >

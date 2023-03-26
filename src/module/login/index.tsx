@@ -26,19 +26,19 @@ export default function Login() {
             <div className="login-box">
                 <Card 
                     hoverShadow
-                    title="需要验证才能使用"
+                    title="Requires validation to use"
                     style={{width: 400}}
                     footer={
                         <Button 
                             block 
                             onClick={onVerify}
                             loading={verifying}
-                        >验证</Button>
+                        >verify</Button>
                     }
                 >
                     <Form form={form}>
-                        <Form.FormItem label="令牌：" name="token" rules={[{required: true}]}>
-                            <Input type="password" />
+                        <Form.FormItem label="token:" name="token" rules={[{required: true, message: 'please enter token'}]}>
+                            <Input type="password" placeholder="please enter" />
                         </Form.FormItem>
                     </Form>                                        
                 </Card>
