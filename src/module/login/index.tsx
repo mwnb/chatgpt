@@ -11,15 +11,29 @@ export default function Login() {
     const [verifying, setVerifying] = useState(false)
 
     const onVerify = () => {
-        form.validate().then(verifyResults => {
+        form.validate().then(async verifyResults => {
             const pass = Object.values(verifyResults).every(item => item.result)
             if(pass) {
                 setVerifying(true)
+                const { token } = form.getFieldsValue(true)
+                try {
+                    const result = await (await fetch('https://gmlook.top/chat/openai/auth', {
+                        method: 'POST',
+                        headers: new Headers({
+                            'Content-Type': 'application/json'
+                        }),
+                        body: token
+                    })).json()
+                    console.log({result})
+                } catch (e) {
+                    console.error(e)
+                }                
             }
         })       
         
         // navigate('/')
     }
+    
 
     return (
         <div className="login" style={{backgroundImage: `url(${loginPng})`}}>

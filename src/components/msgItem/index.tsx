@@ -2,6 +2,10 @@ import React from 'react'
 import { Avatar } from 'tdesign-react'
 import { UserIcon } from 'tdesign-icons-react'
 import './index.scss'
+import robotAvatar from '../../assets/imgs/home01.jpeg'
+import meAvatar from '../../assets/imgs/home02.jpeg'
+
+
 
 interface Props {
     msg: string
@@ -11,7 +15,7 @@ interface Props {
 export default function MsgItem(props: Props) {
     return (
         <div className="msg-item">
-            <Avatar icon={<UserIcon />} style={{ marginRight: '10px' }} />
+            <Avatar image={meAvatar} style={{ marginRight: '10px' }} />
             <div className="info">
                 <span className="time">{props.timeFormat}</span>
                 <div className="text">
@@ -41,7 +45,7 @@ export function MsgItemRobot(props: Props) {
                     </div>                    
                 </div>
             </div>
-            <Avatar image="https://tdesign.gtimg.com/site/avatar.jpg" style={{ marginLeft: '10px' }} />
+            <Avatar image={robotAvatar} style={{ marginLeft: '10px' }} />
         </div>
     )
 }

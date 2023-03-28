@@ -6,10 +6,12 @@ import MsgItem, { MsgItemRobot } from '../msgItem'
 import { storage } from '../../utils'
 import dayjs from 'dayjs'
 
+
 export default function IM() {
     const [text, setText] = useState('')
     const [IconType, setIconType] = useState<typeof LoadingIcon|typeof EnterIcon>(EnterIcon)
     const [msgGroup, setMsgGroup] = useState(storage.getMsgGroupList())
+    
     
     const fetchData = async () => {
         try {
@@ -38,6 +40,7 @@ export default function IM() {
         }        
     }
 
+    // <- 接收数据 robot msg
     async function readData(reader: ReadableStreamDefaultReader) {
         const o = await reader.read()
         const textDecoder = new TextDecoder()
@@ -65,7 +68,7 @@ export default function IM() {
     }
 
 
-
+    // 发送数据 -> me msg
     const onSend = debound(() => {
         fetchData()
     }, 300)
@@ -91,7 +94,7 @@ export default function IM() {
 
     return (
         <Card
-            title="gpt3.5"
+            title="学编程不如吃快餐。兄弟们，到镇上了！"
             headerBordered
             style={{ height: '100%' }}
             footer={(
