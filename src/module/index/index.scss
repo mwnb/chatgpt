@@ -13,7 +13,14 @@
         height: 100%;
         .msg-list {
             height: calc(73vh);
-            overflow: hidden;
+            overflow-y: auto;
+            &::-webkit-scrollbar {
+                display: none;
+            }
+        }
+        .t-card__header,
+        .t-card__body {
+            padding: 16px;
         }
     }
     @media screen and (max-width: 500px) {

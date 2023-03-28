@@ -7,3 +7,52 @@ export function debound(callback: (...args: any) => void, delay: number) {
         }, delay)        
     }
 }
+
+
+interface MsgItem {
+    timeFormat: string
+    msg: string
+}
+interface MsgGroup {
+    me: MsgItem[]
+    robot: MsgItem[]
+}
+
+
+const MSG_GROUP_LIST = 'MSG_GROUP_LIST'
+class Storage {
+    private msgGroupList: MsgGroup = {me: [], robot: []}
+
+    constructor() {
+        this.init()
+    }
+
+    init() {
+        try {
+            const result = JSON.parse(localStorage.getItem(MSG_GROUP_LIST) as string)
+            if (!result) {
+                throw new TypeError()
+            }
+            this.msgGroupList = result
+        } catch {
+            this.msgGroupList = {
+                me: [],
+                robot: []
+            }
+            const msgGroupTemplate = JSON.stringify(this.msgGroupList)
+            
+            localStorage.setItem(MSG_GROUP_LIST, msgGroupTemplate)
+        }
+    }
+
+    getMsgGroupList() {
+        return this.msgGroupList
+    }
+
+    syncMsgGroupList(msgGroupList: MsgGroup) {
+        this.msgGroupList = msgGroupList
+        localStorage.setItem(MSG_GROUP_LIST, JSON.stringify(this.msgGroupList))
+    }
+}
+
+export const storage = new Storage()
