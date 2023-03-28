@@ -6,4 +6,12 @@
         top: 180px;
         right: 100px;
     }
+    @media screen and (max-width: 500px) {
+        &-box {
+            position: static;
+            margin: 200px auto;
+            display: flex;
+            justify-content: center;
+        }   
+    }
 }

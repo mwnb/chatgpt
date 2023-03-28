@@ -27,7 +27,7 @@ export default function Login() {
                 <Card 
                     hoverShadow
                     title="Requires validation to use"
-                    style={{width: 400}}
+                    style={{width: window.innerWidth <= 500 ? 300 : 400}}
                     footer={
                         <Button 
                             block 
