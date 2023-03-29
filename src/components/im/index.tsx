@@ -25,19 +25,20 @@ export default function IM() {
                 timeFormat: dayjs().format('YYYY-MM-DD HH:mm:ss'),
                 msg: value
             }
+            setIconType(LoadingIcon)
             msgGroup.me.push(meMsgInfo)
             storage.syncMsgGroupList(msgGroup)
             setMsgGroup({...msgGroup})                        
             requestAnimationFrame(() => {
                 toBottom()
             })
-            const response = await fetch(`https://gmlook.top/chat/openai/gpt?prompt=${value}`, {
-                // method: 'POST',
-                // headers: new Headers({
-                //     'Content-Type': 'Application/json',
-                //     'uuid': storage.getUUID() as string
-                // }),
-                // body: value
+            const response = await fetch(`https://gmlook.top/chat/openai/gpt`, {
+                method: 'POST',
+                headers: new Headers({
+                    'Content-Type': 'Application/json',
+                    'uuid': storage.getUUID() as string
+                }),
+                body: value
             })  
             const reader = response.body?.getReader() as ReadableStreamDefaultReader
             readData(reader)
@@ -76,8 +77,7 @@ export default function IM() {
 
 
     // 发送数据 -> me msg
-    const onSend = debound(() => {
-        setIconType(LoadingIcon)
+    const onSend = debound(() => {        
         fetchData()
     }, 300)
 
