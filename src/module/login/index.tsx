@@ -4,6 +4,7 @@ import useForm from 'tdesign-react/es/form/hooks/useForm'
 import './index.scss'
 import loginPng from '../../assets/imgs/login.png'
 import { useNavigate } from 'react-router-dom'
+import { storage } from '../../utils'
 
 export default function Login() {
     const [ form ] = useForm()
@@ -24,14 +25,18 @@ export default function Login() {
                         }),
                         body: token
                     })).json()
-                    console.log({result})
+                    if (result.code === 200) {
+                        storage.setUUID(result.data)
+                        navigate('/')                
+                    }                    
                 } catch (e) {
                     console.error(e)
-                }                
+                } finally {
+                    setVerifying(false)
+                }            
             }
         })       
-        
-        // navigate('/')
+                
     }
     
 

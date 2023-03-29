@@ -2,19 +2,23 @@
     padding: 3px;
     border: 1px solid #fdfdfd;
     display: flex;
+
     .info {
         flex: 1;
+
         .time {
             font-size: 12px;
             color: gray;
         }
-        .text {            
-            display: flex;                      
-            :first-child {
+
+        .text {
+            display: flex;
+
+            .msg-content {
                 border: 1px solid rgb(188, 186, 186);
                 padding: 3px;
-                border-radius: 3px; 
-            } 
+                border-radius: 3px;
+            }
         }
     }
 }
@@ -24,22 +28,36 @@
     border: 1px solid #fdfdfd;
     display: flex;
     justify-content: flex-end;
+
     .info {
         flex: 1;
         display: flex;
         flex-direction: column;
+
         .time {
             font-size: 12px;
             color: gray;
             text-align: right;
         }
-        .text {            
-            display: flex;                      
-            :last-child {
+
+        .text {
+            display: flex;
+
+            .msg-content {
                 border: 1px solid rgb(188, 186, 186);
                 padding: 3px;
-                border-radius: 3px; 
-            } 
+                border-radius: 3px;
+
+                code {
+                    border-radius: 3px;
+                }
+            }
         }
+    }
+}
+
+@media screen and (max-width: 500px) {
+    .msg-content {
+        max-width: 300px;
     }
 }

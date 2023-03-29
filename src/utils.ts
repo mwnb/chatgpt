@@ -20,6 +20,7 @@ interface MsgGroup {
 
 
 const MSG_GROUP_LIST = 'MSG_GROUP_LIST'
+const UUID = 'UUID'
 class Storage {
     private msgGroupList: MsgGroup = {me: [], robot: []}
 
@@ -53,6 +54,14 @@ class Storage {
         this.msgGroupList = msgGroupList
         localStorage.setItem(MSG_GROUP_LIST, JSON.stringify(this.msgGroupList))
     }
+
+    setUUID(uuid: string) {
+        localStorage.setItem(UUID, uuid)
+    }
+
+    getUUID() {
+        return localStorage.getItem(UUID)
+    }
 }
 
-export const storage = new Storage()
+export const storage = new Storage()    

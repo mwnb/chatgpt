@@ -27,12 +27,18 @@ export default function IM() {
             }
             msgGroup.me.push(meMsgInfo)
             storage.syncMsgGroupList(msgGroup)
-            setMsgGroup({...msgGroup})            
-            setIconType(LoadingIcon)
+            setMsgGroup({...msgGroup})                        
             requestAnimationFrame(() => {
                 toBottom()
             })
-            const response = await fetch(`https://gmlook.top/chat/openai/gpt?prompt=${value}`)  
+            const response = await fetch(`https://gmlook.top/chat/openai/gpt?prompt=${value}`, {
+                // method: 'POST',
+                // headers: new Headers({
+                //     'Content-Type': 'Application/json',
+                //     'uuid': storage.getUUID() as string
+                // }),
+                // body: value
+            })  
             const reader = response.body?.getReader() as ReadableStreamDefaultReader
             readData(reader)
         } catch (e) {
@@ -56,6 +62,7 @@ export default function IM() {
                     msg: text
                 }
             }
+            console.log(msgGroup)
             return {...msgGroup}
         })   
         toBottom()
@@ -70,6 +77,7 @@ export default function IM() {
 
     // 发送数据 -> me msg
     const onSend = debound(() => {
+        setIconType(LoadingIcon)
         fetchData()
     }, 300)
 
@@ -96,7 +104,7 @@ export default function IM() {
         <Card
             title="学编程不如吃快餐。兄弟们，到镇上了！"
             headerBordered
-            style={{ height: '100%' }}
+            style={{ height: '100%', width: window.innerWidth < 500 ? '100%' : 'auto' }}
             footer={(
                 <footer className="footer">
                     <Textarea 
@@ -105,6 +113,7 @@ export default function IM() {
                         onChange={v => setText(v)}
                         onKeypress={onEnter}
                         placeholder="please enter your question"
+                        disabled={IconType === LoadingIcon}
                     />
                     <Tooltip content={IconType === EnterIcon ? 'send' : 'loading'}>
                         <IconType 
