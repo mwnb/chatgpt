@@ -63,7 +63,6 @@ export default function IM() {
                     msg: text
                 }
             }
-            console.log(msgGroup)
             return {...msgGroup}
         })   
         toBottom()
