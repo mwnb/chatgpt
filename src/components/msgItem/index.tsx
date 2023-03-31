@@ -15,19 +15,19 @@ interface Props {
 
 export default function MsgItem(props: Props) {
     return (
-        <div className="msg-item">
-            <Avatar image={meAvatar} style={{ marginRight: '10px' }} />
+        <div className="msg-item">            
             <div className="info">
                 <span className="time">{props.timeFormat}</span>
                 <div className="text">
-                    <div className="msg-content">
-                        {props.msg}
-                    </div>
                     <div style={{ flex: 1 }}>
 
                     </div>
+                    <div className="msg-content">
+                        {props.msg}
+                    </div>                    
                 </div>
             </div>
+            <Avatar image={meAvatar} style={{ marginRight: '10px' }} />
         </div>
     )
 }
@@ -45,16 +45,16 @@ export function MsgItemRobot(props: Props) {
 
     return (
         <div className="msg-item-robot">
+            <Avatar image={robotAvatar} style={{ marginLeft: '10px' }} />
             <div className="info">
                 <span className="time">{props.timeFormat}</span>
-                <div className="text">
+                <div className="text">                    
+                    <div className="msg-content" dangerouslySetInnerHTML={{__html: marked(props.msg) }} />
                     <div style={{ flex: 1 }}>
 
                     </div>
-                    <div className="msg-content" dangerouslySetInnerHTML={{__html: marked(props.msg) }} />
                 </div>
-            </div>
-            <Avatar image={robotAvatar} style={{ marginLeft: '10px' }} />
+            </div>            
         </div>
     )
 }

@@ -101,7 +101,7 @@ export default function IM() {
 
     return (
         <Card
-            title="学编程不如吃快餐。兄弟们，到镇上了！"
+            title="他时只求善果在，今日但为旧事衰"
             headerBordered
             style={{ height: '100%', width: window.innerWidth < 500 ? '100%' : 'auto' }}
             footer={(
