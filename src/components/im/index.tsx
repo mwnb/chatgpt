@@ -1,17 +1,23 @@
 import React, { useState, createRef, useRef, useEffect } from 'react';
-import { Card, message, Textarea, Tooltip } from 'tdesign-react'
-import { EnterIcon, LoadingIcon } from 'tdesign-icons-react'
+import { Button, Card, message, Textarea, Tooltip } from 'tdesign-react'
+import { EnterIcon, LoadingIcon, StopCircleIcon } from 'tdesign-icons-react'
 import { debound } from '../../utils'
 import MsgItem, { MsgItemRobot } from '../msgItem'
 import { storage } from '../../utils'
 import dayjs from 'dayjs'
+import hljs from 'highlight.js'
+import './index.scss'
 
-
+// 中断回答
+let stop = false
 export default function IM() {
     const [text, setText] = useState('')
     const [IconType, setIconType] = useState<typeof LoadingIcon|typeof EnterIcon>(EnterIcon)
-    const [msgGroup, setMsgGroup] = useState(storage.getMsgGroupList())
+    const [msgGroup, setMsgGroup] = useState(storage.getMsgGroupList())    
     
+    const onAbort = () => {
+        stop = true
+    }
     
     const fetchData = async () => {
         try {
@@ -49,6 +55,12 @@ export default function IM() {
 
     // <- 接收数据 robot msg
     async function readData(reader: ReadableStreamDefaultReader) {
+        if (stop) {
+            stop = false
+            await reader.cancel()
+            setIconType(EnterIcon)
+            return 
+        }
         const o = await reader.read()
         const textDecoder = new TextDecoder()
         const text = textDecoder.decode(o.value)
@@ -66,10 +78,11 @@ export default function IM() {
             return {...msgGroup}
         })   
         toBottom()
+        storage.syncMsgGroupList(msgGroup)
         if (!o.done) {  
              readData(reader)        
-        } else {
-            storage.syncMsgGroupList(msgGroup)
+        } else {     
+            stop = false    
             setIconType(EnterIcon)
         }
     }
@@ -97,29 +110,47 @@ export default function IM() {
 
     useEffect(() => {
         toBottom()
+
+        document.querySelectorAll('pre code').forEach((el) => {
+            if (!el.className.includes('hljs')) {
+                hljs.highlightElement(el as HTMLElement)
+            }            
+        })
     }, [])
 
     return (
         <Card
-            title="他时只求善果在，今日但为旧事衰"
+            title="文心一言 pro max"
             headerBordered
-            style={{ height: '100%', width: window.innerWidth < 500 ? '100%' : 'auto' }}
+            style={{ height: '100%', width: window.innerWidth < 500 ? '100%' : 'auto', display: 'flex', flexDirection: 'column' }}
             footer={(
-                <footer className="footer">
-                    <Textarea 
-                        value={text}
-                        autosize={{ minRows: 2, maxRows: 2 }} 
-                        onChange={v => setText(v)}
-                        onKeypress={onEnter}
-                        placeholder="please enter your question"
-                        disabled={IconType === LoadingIcon}
-                    />
-                    <Tooltip content={IconType === EnterIcon ? 'send' : 'loading'}>
-                        <IconType 
-                            style={{ fontSize: 35, cursor: 'pointer' }} 
-                            onClick={IconType === EnterIcon ? onSend : void 0}
+                <footer className="card-footer">
+                    {
+                        IconType === LoadingIcon && (
+                            <div className="stop-btn">
+                                <Button
+                                    icon={<StopCircleIcon/>}
+                                    onClick={onAbort} 
+                                >stop</Button>
+                            </div>
+                        )
+                    }                    
+                    <div className="input-text">
+                        <Textarea 
+                            value={text}
+                            autosize={{ minRows: 2, maxRows: 2 }} 
+                            onChange={v => setText(v)}
+                            onKeypress={onEnter}
+                            placeholder="please enter your question"
+                            disabled={IconType === LoadingIcon}
                         />
-                    </Tooltip>                    
+                        <Tooltip content={IconType === EnterIcon ? 'send' : 'loading'}>
+                            <IconType 
+                                style={{ fontSize: 35, cursor: 'pointer' }} 
+                                onClick={IconType === EnterIcon ? onSend : void 0}
+                            />
+                        </Tooltip>                    
+                    </div>                    
                 </footer>
             )}
         >
