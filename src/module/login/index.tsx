@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Card, Input, Form, Button } from 'tdesign-react'
+import { Card, Input, Form, Button, message } from 'tdesign-react'
 import useForm from 'tdesign-react/es/form/hooks/useForm'
 import './index.scss'
 import loginPng from '../../assets/imgs/login.png'
@@ -28,9 +28,12 @@ export default function Login() {
                     if (result.code === 200) {
                         storage.setUUID(result.data)
                         navigate('/')                
-                    }                    
-                } catch (e) {
+                    } else {
+                        message.error('token error')
+                    }               
+                } catch (e) {                    
                     console.error(e)
+                    alert(1)
                 } finally {
                     setVerifying(false)
                 }            
@@ -57,7 +60,11 @@ export default function Login() {
                 >
                     <Form form={form}>
                         <Form.FormItem label="token:" name="token" rules={[{required: true, message: 'please enter token'}]}>
-                            <Input type="password" placeholder="please enter" />
+                            <Input 
+                                type="password" 
+                                placeholder="please enter"
+                                onEnter={onVerify}
+                            />
                         </Form.FormItem>
                     </Form>                                        
                 </Card>
