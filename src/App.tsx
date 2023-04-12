@@ -4,6 +4,7 @@ import './App.scss'
 import LayoutRouter from './router'
 import home02 from './assets/imgs/home02.jpeg'
 import { storage } from './utils'
+import BeiAn from './components/beian'
 
 
 function App() {
@@ -29,6 +30,7 @@ function App() {
     return (
         <div className="App" style={{backgroundImage: `url(${home02})`}}>
             <LayoutRouter />
+            <BeiAn />
         </div>
     )
 }

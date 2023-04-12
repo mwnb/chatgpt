@@ -1,0 +1,11 @@
+.beian {
+    display: flex;
+    justify-content: center;
+    background-color: transparent;
+    padding: 10px;
+    &-link {
+        font-size: 12px;
+        color: #333;
+        text-decoration: none;
+    }    
+}
