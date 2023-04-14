@@ -120,7 +120,7 @@ export default function IM() {
 
     return (
         <Card
-            title="文心一言 pro max"
+            title="我们永远站在回忆背后"
             headerBordered
             style={{ height: '100%', width: window.innerWidth < 500 ? '100%' : 'auto', display: 'flex', flexDirection: 'column' }}
             footer={(
