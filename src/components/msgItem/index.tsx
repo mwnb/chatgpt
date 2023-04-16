@@ -38,7 +38,7 @@ export function MsgItemRobot(props: Props) {
     useEffect(() => {
         const codes = document.querySelectorAll('pre code')
         const lastCode = codes[codes.length - 1]        
-        if (!lastCode?.className.includes('hljs')) {
+        if (lastCode && !lastCode?.className.includes('hljs')) {
             hljs.highlightElement(lastCode as HTMLElement)
         }            
     })
