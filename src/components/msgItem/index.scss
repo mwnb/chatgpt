@@ -56,6 +56,20 @@
     }
 }
 
+pre {
+    code {
+        position: relative;
+        &::after {
+            position: absolute;
+            content: 'copy';
+            right: 10px;
+            top: 0;
+            cursor: pointer;
+
+        }
+    }
+}
+
 @media screen and (max-width: 500px) {
     .msg-content {
         max-width: 300px;

@@ -1,3 +1,5 @@
+import { message } from "tdesign-react"
+
 export function debound(callback: (...args: any) => void, delay: number) {
     let timer: any = null
     return (...args: any) => {
@@ -65,3 +67,14 @@ class Storage {
 }
 
 export const storage = new Storage()    
+
+export function copyCode() {
+    document.querySelectorAll('pre code').forEach(code => {
+        (code as HTMLElement).onclick = async (event: MouseEvent) => {
+            const target = event.target as HTMLElement
+            const originCode = target.innerText
+            await navigator.clipboard.writeText(originCode)
+            message.success('copy success!')
+        }
+    })
+}

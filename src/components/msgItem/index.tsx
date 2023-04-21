@@ -7,6 +7,7 @@ import robotAvatar from '../../assets/imgs/home01.jpeg'
 import meAvatar from '../../assets/imgs/home02.jpeg'
 import hljs from 'highlight.js'
 import { marked } from 'marked'
+import { copyCode } from '../../utils'
 
 interface Props {
     msg: string
@@ -40,7 +41,8 @@ export function MsgItemRobot(props: Props) {
         const lastCode = codes[codes.length - 1]        
         if (lastCode && !lastCode?.className.includes('hljs')) {
             hljs.highlightElement(lastCode as HTMLElement)
-        }            
+        }   
+        copyCode()         
     })
 
     return (
