@@ -71,10 +71,14 @@ export const storage = new Storage()
 export function copyCode() {
     document.querySelectorAll('pre code').forEach(code => {
         (code as HTMLElement).onclick = async (event: MouseEvent) => {
-            const target = event.target as HTMLElement
-            const originCode = target.innerText
-            await navigator.clipboard.writeText(originCode)
-            message.success('copy success!')
+            const {offsetWidth} = event.target as HTMLElement
+            const { offsetX, offsetY } = event
+            if (offsetY < 50 && offsetWidth - offsetX < 50) {
+                const target = event.target as HTMLElement
+                const originCode = target.innerText
+                await navigator.clipboard.writeText(originCode)
+                message.success('copy success!')
+            }            
         }
     })
 }
